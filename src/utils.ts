@@ -7,3 +7,15 @@ export type Transition = {
 };
 
 export type Direction = "L" | "R";
+
+export type MachineConfig = {
+    Q: string[],
+    gamma: string[],
+    start: string,
+    accept: string,
+    reject: string,
+    transitions: Transition[],
+    wildcard?: string
+}
+
+export const PADDING = 10;

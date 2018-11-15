@@ -1,19 +1,28 @@
+import { PADDING } from "./utils";
+
+/**
+ * This class is 100% unnecessary, but I liked the idea of 
+ * pretending to insert a physical tape so bite me.
+ */
 export class Tape {
     private data: string[];
 
     constructor(data: string[]) {
-        if(data === undefined || data.length < 1) {
-            this.data = [];
-        }
-        else {
-            this.data = data;
+        this.data = [];
+        
+        for(let i = 0; i < PADDING; i++) {
+            this.data.push("_");
         }
 
-        // Tape could be imagined to be infinitely long, 
-        // so we'll just initialize it with (or add) 1k blanks
-        // represented by a space char
-        for (let i = 0; i < 1000; i++) {
-            this.data.push(' ');
+        for (let entry of data) {
+            this.data.push(entry);
+        }
+
+
+        // Since the tape can be infinitely long, let's just lock it
+        // at somewhere around 200 blanks after initial data segment.
+        for (let i = 0; i < PADDING; i++) {
+            this.data.push("_");
         }
     }
 
@@ -23,6 +32,10 @@ export class Tape {
 
     public setDataAtPosition(position: number, data: string): void {
         this.data[position] = data;
+    }
+
+    public toString(): string {
+        return this.data.join("");
     }
 
 }

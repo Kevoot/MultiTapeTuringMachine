@@ -1,4 +1,5 @@
 import { Tape } from "./Tape";
+import { PADDING } from "./utils";
 
 export class Head {
     private position: number;
@@ -8,7 +9,8 @@ export class Head {
             this.position = startFromPosition;
         }
         else {
-            this.position = 0;
+            // The data from the initial object needs to be padded
+            this.position = PADDING;
         }
     }
 
@@ -26,5 +28,9 @@ export class Head {
 
     public moveRight(): void {
         this.position += 1;
+    }
+
+    public getPosition(): number {
+        return this.position;
     }
 }

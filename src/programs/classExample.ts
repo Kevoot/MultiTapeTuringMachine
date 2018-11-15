@@ -1,4 +1,4 @@
-import { Transition } from "../utils";
+import { Transition, MachineConfig } from "../utils";
 
 const classExampleTransitions: Transition[] = [
     {
@@ -150,7 +150,7 @@ const classExampleTransitions: Transition[] = [
     },
 ]
 
-export const classExampleMachine = {
+export const classExampleMachine: MachineConfig = {
     Q: ["A", "R", "a", "b", "c", "d", "e", "f", "g"],
     gamma: ["_", "0", "1", "x", "#"],
     start: "a",
