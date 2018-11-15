@@ -2,6 +2,7 @@ import { TuringMachine } from "./TuringMachine";
 import vis = require("vis");
 import { binaryPalindromeMachine, binaryPalindromeTapeData } from "./programs/binaryPalindrome";
 import { classExampleMachine, classExampleTapeData } from "./programs/classExample";
+import { binaryAdditionMachine, binaryAdditionTapeData } from "./programs/binaryAddition";
 import { MachineConfig } from "./utils";
 
 export function main(config: MachineConfig, input: string[]): void {
@@ -23,18 +24,18 @@ export function main(config: MachineConfig, input: string[]): void {
     let t1 = performance.now();
     let totalTime = (t1 - t0);
 
-    writeOutput(input, copyTape, result, totalTime, tm.getLogs());
-    showDiagram();
+    writeOutput(input, tm.getTapeData(), result, totalTime, tm.getLogs());
+    showDiagram(config);
 }
 
-function writeOutput(initialInput: string[], usedTape: string[], result, totalTime: number, logs: string[]) {
+function writeOutput(initialInput: string[], usedTape: string, result, totalTime: number, logs: string[]) {
     let resultString = [];
     resultString.push("Initial Tape Data: " + initialInput.toString());
     resultString.push("Accepted: " + (result.accepted ? "true," : "false")); + " machine halted after ";
     resultString.push("Total Transitions: " + result.totalTransitions);
     resultString.push("Ended in state: '" + result.state + "'");
     resultString.push("Total time running: " + totalTime + " milliseconds");
-    resultString.push("End Tape Data: " + usedTape.toString());
+    resultString.push("End Tape Data: " + usedTape);
     resultString.push("States: ");
     for (let str of logs) {
         resultString.push(str);
@@ -43,7 +44,7 @@ function writeOutput(initialInput: string[], usedTape: string[], result, totalTi
     document.getElementById('resultText').innerHTML = resultString.join('<br />');
 }
 
-export function showDiagram() {
+export function showDiagram(config: MachineConfig) {
     let options: vis.Options = {
         edges: {
             arrows: {
@@ -63,10 +64,10 @@ export function showDiagram() {
 
     let nodeSet = [];
     let edgeSet = [];
-    for (let state of binaryPalindromeMachine.Q) {
+    for (let state of config.Q) {
         nodeSet.push({ id: state, label: state });
     }
-    for (let transition of binaryPalindromeMachine.transitions) {
+    for (let transition of config.transitions) {
         let index = edgeSet.findIndex(entry => entry.from === transition.state && entry.to === transition.next);
         if (index > -1) {
             edgeSet[index].label += "\n" + transition.in + "->" + transition.out + ", " + transition.dir;
@@ -99,6 +100,9 @@ $(document).on('click', '#runButton', () => {
     }
     else if (selection === 'palindrome') {
         config = binaryPalindromeMachine;
+    }
+    else if (selection === 'addition') {
+        config = binaryAdditionMachine;
     }
 
     // Format to array of characters instead of raw string

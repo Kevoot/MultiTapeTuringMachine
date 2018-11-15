@@ -6,7 +6,7 @@ export type Transition = {
     next: string;
 };
 
-export type Direction = "L" | "R";
+export type Direction = "L" | "R" | "*";
 
 export type MachineConfig = {
     Q: string[],

@@ -66,7 +66,11 @@ export class TuringMachine {
                 this.head.write(this.tape, transition.out);
             }
 
-            transition.dir === "L" ? this.head.moveLeft() : this.head.moveRight();
+            if(transition.dir === "L") {
+                this.head.moveLeft();
+            } else if (transition.dir === "R") {
+                this.head.moveRight();
+            }
 
             this.currentState = transition.next;
             if (this.acceptStates.includes(this.currentState)) {
@@ -124,5 +128,9 @@ export class TuringMachine {
 
     public getLogs(): string[] {
         return this.logStrings;
+    }
+
+    public getTapeData(): string {
+        return this.tape.toString();
     }
 }
