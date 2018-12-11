@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Turing Machines</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/vis.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+</head>
+
+<body>
+    <header>
+        <!-- Fixed navbar -->
+        <br>
+        <br>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="#">3-tape Turing Machine</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+            </div>
+        </nav>
+        <style type="text/css">
+            #mynetwork {
+                height: 500px;
+                width: 80%;
+                border: 1px solid lightgray;
+            }
+        </style>
+    </header>
+
+    <!-- Begin page content -->
+    <h2 class="mt-5">Run a Multitape Turing Machine</h2>
+    <div class="contentbody graphmain col-md-12">
+        <div class="col-md-12">
+            Tape Data:
+            <input type="text" id="inputData" />
+            <button type="button" id="runButton">Run</button>
+            <select id="programSelector">
+                <option value="numberSorter">Number Sorter</option>
+            </select>
+        </div>
+        <hr>
+        <div class="col-md-12">
+            <div id="card" class="card card-body col-md-4 graphmain">
+                <div id="resultText">
+                    <!-- Filled in programmatically -->
+                </div>
+            </div>
+            <div id="mynetwork" class="col-md-6 graphmain"></div>
+        </div>
+    </div>
+
+    <script>
+        var exports = {};
+    </script>
+    <div id="main"></div>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 100%;
+        }
+    </style>
+    <script src="main.bundle.js"></script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="3rdParty/bootstrap.min.js"></script>
+</body>
+
+</html>

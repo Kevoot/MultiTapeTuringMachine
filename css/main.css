@@ -1,0 +1,37 @@
+body {
+    background-color: rgb(210, 210, 210);
+}
+
+.contentbody {
+    padding-top: 20px;
+}
+
+.graphmain {
+    display: inline-block;
+    vertical-align: top;
+    background-color: rgb(255, 255, 255);
+}
+
+.codecollapse {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+.codetextarea {
+    width: 100%;
+}
+
+.outputtextarea {
+    width: 80%;
+}
+
+.result {
+    border-width: 2px;
+    border-style: double;
+}
+
+h2, h3 {
+    margin: 0 auto;
+    text-align: center;
+    padding-bottom: 30px;
+}
