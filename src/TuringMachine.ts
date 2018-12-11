@@ -3,8 +3,8 @@ import { Transition } from "./utils";
 import { Tape } from "./Tape";
 
 export class TuringMachine {
-    private head: Head;
-    private tape: Tape;
+    private heads: Head[];
+    private tapes: Tape[];
     private currentState: string;
     private states: string[];
     private rwVals: string[];
@@ -28,7 +28,9 @@ export class TuringMachine {
         this.currentState = q0;
         this.transitions = delta;
         this.rejectState = qR;
-        this.head = new Head();
+
+        this.heads = [];
+        this.tapes = [];
 
         this.logStrings = [];
 
@@ -36,8 +38,20 @@ export class TuringMachine {
         Array.isArray(qA) ? this.acceptStates.concat(qA) : this.acceptStates.push(qA);
     }
 
-    public insertTape(data: string[]) {
-        this.tape = new Tape(data);
+    public setNumHeads(num_heads: number): void {
+        for (let i = 0; i < num_heads; i++) {
+            this.heads.push(new Head());
+        }
+    }
+
+    public setNumTapes(num_tapes: number): void {
+        for (let i = 0; i < num_tapes; i++) {
+            this.tapes.push(new Tape([]));
+        }
+    }
+
+    public insertTape(data: string[], tape_num: number): void {
+        this.tapes[tape_num] = new Tape(data);
     }
 
     public run(): { accepted: boolean, totalTransitions: number, state: string } {
@@ -45,9 +59,11 @@ export class TuringMachine {
         let currentInput;
 
         while (this.transitionsRun <= this.MAX_TRANSITIONS) {
-            currentInput = this.head.read(this.tape);
+
+            currentInput = this.heads[0].read(this.tapes[0]);
             let transition = this.lookupTransition(currentInput);
-            this.log(this.currentState, this.tape.toString(), this.head.getPosition());
+
+            this.log(this.currentState, this.tapes[0].toString(), this.heads[0].getPosition());
             if (transition === undefined) {
                 // If no direct transition is found, see if there's a wildcard available
                 transition = this.lookupTransition('*');
@@ -60,16 +76,30 @@ export class TuringMachine {
                     };
                 }
                 // Otherwise write the found input since wildcard and continue
-                this.head.write(this.tape, currentInput);
+                this.heads[0].write(this.tapes[0], currentInput);
             }
             else {
-                this.head.write(this.tape, transition.out);
+                this.heads[0].write(this.tapes[0], transition.out1);
+                this.heads[1].write(this.tapes[1], transition.out2);
+                this.heads[2].write(this.tapes[2], transition.out3);
             }
 
-            if(transition.dir === "L") {
-                this.head.moveLeft();
-            } else if (transition.dir === "R") {
-                this.head.moveRight();
+            if(transition.dir1 === "L") {
+                this.heads[0].moveLeft();
+            } else if (transition.dir1 === "R") {
+                this.heads[0].moveRight();
+            }
+
+            if(transition.dir2 === "L") {
+                this.heads[1].moveLeft();
+            } else if (transition.dir2 === "R") {
+                this.heads[1].moveRight();
+            }
+
+            if(transition.dir3 === "L") {
+                this.heads[2].moveLeft();
+            } else if (transition.dir3 === "R") {
+                this.heads[2].moveRight();
             }
 
             this.currentState = transition.next;
@@ -130,7 +160,7 @@ export class TuringMachine {
         return this.logStrings;
     }
 
-    public getTapeData(): string {
-        return this.tape.toString();
+    public getTapeData(tape_num: number): string {
+        return this.tapes[tape_num].toString();
     }
 }

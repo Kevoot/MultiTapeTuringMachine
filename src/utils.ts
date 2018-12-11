@@ -1,8 +1,12 @@
 export type Transition = {
     state: string,
     in: string,
-    out: string,
-    dir: Direction,
+    out1: string,
+    out2: string,
+    out3: string,
+    dir1: Direction,
+    dir2: Direction,
+    dir3: Direction,
     next: string;
 };
 
